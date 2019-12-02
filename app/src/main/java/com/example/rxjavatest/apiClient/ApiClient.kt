@@ -1,6 +1,5 @@
 package com.example.rxjavatest.apiClient
 
-import android.content.Context
 import com.example.rxjavatest.constants.Constants
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -16,7 +15,7 @@ class ApiClient {
     companion object{
         private const val REQUEST_TIMEOUT: Long = 60
 
-        fun getClient(): Retrofit{
+        fun getClient(): Retrofit {
             val okHttpClient: OkHttpClient = initOkHttp()
 
             return Retrofit.Builder()
@@ -33,17 +32,24 @@ class ApiClient {
             val httpClient: OkHttpClient.Builder = OkHttpClient().newBuilder()
             httpClient.connectTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
                       .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
-                      .addInterceptor(object : Interceptor {
-                          override fun intercept(chain: Interceptor.Chain): Response {
-                              val original: Request = chain.request()
-                              val requestBuilder: Request.Builder = original.newBuilder()
-                              requestBuilder.addHeader("Accept", "application/json")
-                              requestBuilder.addHeader("Content-Type", "application/json")
+//                      .addInterceptor(object : Interceptor {
+//                          override fun intercept(chain: Interceptor.Chain): Response {
+//                              val original: Request = chain.request()
+//                              val requestBuilder: Request.Builder = original.newBuilder()
+//                              requestBuilder.addHeader("Accept", "application/json")
+//                              requestBuilder.addHeader("Content-Type", "application/json")
+//
+//                              val request: Request = requestBuilder.build()
+//                              return chain.proceed(request)
+//                          }
+//                      })
+                        .addInterceptor { chain ->  val original: Request = chain.request()
+                                      val requestBuilder: Request.Builder = original.newBuilder()
+                                      requestBuilder.addHeader("Accept", "application/json")
+                                      requestBuilder.addHeader("Content-Type", "application/json")
 
-                              val request: Request = requestBuilder.build()
-                              return chain.proceed(request)
-                          }
-                      })
+                                      val request: Request = requestBuilder.build()
+                                      chain.proceed(request)}
 
             return httpClient.build()
         }
