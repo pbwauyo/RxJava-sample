@@ -16,7 +16,9 @@
         app:cardCornerRadius="10dp"
         app:cardUseCompatPadding="true"
         app:cardElevation="5dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/card_background"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -43,12 +45,14 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/movie_image"
                 app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/white"
                 tools:text="@tools:sample/cities" />
 
             <TextView
                 android:id="@+id/movie_overview"
                 android:layout_marginStart="4dp"
                 android:layout_width="0dp"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:maxLines="4"
                 app:layout_constraintStart_toEndOf="@+id/movie_image"
